@@ -24,7 +24,29 @@ std::ostream& operator<<(std::ostream& os, const CostMatrix& cm) {
  * @return The vector of consecutive vertex.
  */
 path_t StageState::get_path() {
-    throw;  // TODO: Implement it!
+    NewVertex vertex = choose_new_vertex();
+    append_to_path(vertex.coordinates);
+    update_cost_matrix(vertex.coordinates);
+    for (int i = 0; i < matrix_.size(); i++) {
+        for (int j = 0; j < matrix_.size(); j++) {
+            if (matrix_[i][j] != INF) {
+                append_to_path(vertex_t(i, j));
+            }
+        }
+    }
+    path_t sorted_path = {unsorted_path_[0].col};
+    unsorted_path_[0].row = INF;
+    while(sorted_path.size() != unsorted_path_.size()) {
+        for (int i = 0; i < unsorted_path_.size(); i++) {
+            if (unsorted_path_[i].row == sorted_path.back()) {
+                sorted_path.push_back(unsorted_path_[i].col);
+                unsorted_path_[i].row == INF;
+            }
+        }
+    }
+
+    return sorted_path;
+}
 }
 
 /**
