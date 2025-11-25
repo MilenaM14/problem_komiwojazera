@@ -93,8 +93,20 @@ cost_t CostMatrix::reduce_rows() {
  * @return Vector of minimum values in columns.
  */
 std::vector<cost_t> CostMatrix::get_min_values_in_cols() const {
-    std::vector<cost_t> min_values;
-    throw;  // TODO: Implement it!
+    std::vector<cost_t> min_value_vector = {};
+    for (int j = 0; j < matrix_[0].size(); j++) {
+        cost_t min_value = INF;
+        for (int i = 0; i < matrix_.size(); i++) {
+            if (matrix_[i][j] < min_value) {
+                min_value = matrix_[i][j];
+            }
+        }
+        if (min_value == INF) {
+            min_value = 0;
+        }
+        min_value_vector.push_back(min_value);
+    }
+    return min_value_vector;
 }
 
 /**
