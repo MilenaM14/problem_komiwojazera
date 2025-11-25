@@ -75,7 +75,17 @@ std::vector<cost_t> CostMatrix::get_min_values_in_rows() const {
  * @return Sum of values reduced in rows.
  */
 cost_t CostMatrix::reduce_rows() {
-    throw;  // TODO: Implement it!
+    cost_t sum = 0;
+    std::vector<cost_t> min_vector = get_min_values_in_rows();
+    for (int i = 0; i < matrix_.size(); i++) {
+        for (int j = 0; j < matrix_[0].size(); j++) {
+            if (matrix_[i][j] != INF) {
+                matrix_[i][j] -= min_vector[i];
+            }
+        }
+        sum += min_vector[i];
+    }
+    return sum;
 }
 
 /**
